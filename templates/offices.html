@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<table id="datatable" class="table table-striped">
+<thead>
+<tr>
+<th>Office name</th>
+<th>Switches</th>
+<th>Physical ports</th>
+<th>Rooms</th>
+</tr>
+</thead>
+<tbody>
+{% for item in offices %}
+<tr>
+<td><a href="{% url switch.views.switches item.office_name %}">{{ item.office_name }}</a></td>
+<td><a href="{% url switch.views.switches item.office_name %}">Switches</a></td>
+<td><a href="{% url switch.views.physical_ports item.office_name %}">Physical ports</a></td>
+<td><a href="{% url switch.views.rooms item.office_name %}">Rooms</a></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+{% endblock %}

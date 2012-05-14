@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block menu %}
+<li><a href="{% url switch.views.rooms switch.office.office_name %}">Rooms</a> </li>
+<li><a href="{% url switch.views.switches switch.office.office_name %}">Switches</a></li>
+<li><a href="{% url switch.views.physical_ports switch.office.office_name %}">Physical ports</a></li>
+{% endblock %}
+
+{% block content %}
+<h2>Details</h2>
+
+<ul>
+<li>Switch: {{ switch }}</li>
+<li>Office: <a href="{% url switch.views.switches switch.office.office_name %}">{{ switch.office }}</a></li>
+</ul>
+
+<h2>Ports</h2>
+<table id="datatable" class="display">
+<thead>
+<tr>
+<th>Port number</th>
+<th>VLAN</th>
+<th>Default VLAN</th>
+<th>Expires</th>
+<th>Locked</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+{% for item in ports %}
+<tr>
+<td><a href="{% url switch.views.change_port item.id %}">{{ item.number }}</a></td>
+<td>{{ item.vlan }}</td>
+<td>{{ item.default_vlan }}</td>
+<td>{{ item.expires }}</td>
+<td>{% if item.locked %}x{%endif%}</td>
+<td>{% if item.description %}{{ item.description }}{% endif %}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+<script type="text/javascript">
+$(document).ready(function() {
+ $("#datatable").dataTable({ "bPaginate": false});
+});
+</script>
+
+
+{% endblock %}

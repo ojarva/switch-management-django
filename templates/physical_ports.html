@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block menu %}
+<li><a href="{% url switch.views.rooms office.office_name %}">rooms</a></li>
+<li><a href="{% url switch.views.switches office.office_name %}">switches</a></li>
+<li><a href="{% url switch.views.physical_ports office.office_name %}">physical ports</a></li>
+{% endblock %}
+
+{% block content %}
+
+<table id="datatable" class="display">
+<thead>
+<tr>
+<th>Physical port</th>
+<th>Room</th>
+<th>VLAN</th>
+<th>Switch port</th>
+<th>Expiration</th>
+</tr>
+</thead>
+<tbody>
+{% for item in ports %}
+<tr>
+<td><a href="{% url switch.views.change_port item.port.id %}">{{ item.name }}</a></td>
+{% if item.room.id %}
+ <td><a href="{% url switch.views.room item.room.id %}">{{ item.room }}</a></td>
+{% else %}
+<td>-</td>
+{% endif %}
+<td>{{ item.port.vlan }} ({{item.port.default_vlan}})</td>
+<td>{{ item.port.number }} {{ item.port.switch.ip }}</td>
+<td>{{ item.port.expires }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+<script type="text/javascript">
+$(document).ready(function() {
+ $("#datatable").dataTable({ "bPaginate": false});
+});
+</script>
+
+
+{% endblock %}

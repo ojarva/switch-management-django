@@ -1,0 +1,8 @@
+syntax: glob
+
+.hg
+.hgignore
+*.pyc
+*.pid
+*.sock
+data.db

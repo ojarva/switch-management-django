@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block menu %}
+<li><a href="{% url switch.views.rooms port.switch.office.office_name %}">Rooms</a> </li>
+<li><a href="{% url switch.views.switches port.switch.office.office_name %}">Switches</a></li>
+<li><a href="{% url switch.views.physical_ports port.switch.office.office_name %}">Physical ports</a></li>
+{% endblock %}
+
+
+{% block content %}
+<h2>Details</h2>
+<ul>
+<li>Switch: <a href="{% url switch.views.ports port.switch.switch_ip %}">{{ port.switch }}</a></li>
+<li>Port: {{ port.number }}</li>
+<li>Default VLAN: {{ port.default_vlan }}</li>
+<li>Current VLAN: {{ port.vlan }}</li>
+{% if physicalport %}
+<li>Room: <a href="{% url switch.views.room physicalport.room.id %}">{{ physicalport.room }}</a></li>
+<li>Port: {{ physicalport.name }}</li>
+{% else %}
+<li>No physical port assigned.</li>
+{% endif %} 
+<li> Go to <a href="{% url admin:switch_physicalport_changelist %}">admin</a> to change physical ports.</li>
+</ul>
+
+<h2>Change</h2>
+
+<table>
+<form method="post" action="?">
+{% csrf_token %}
+{{form}}
+<th></th>
+<td><input type="submit" value="Save"></td>
+</form>
+</table>
+
+<script type="text/javascript">
+$(document).ready(function() {
+ if ($("#id_expires").val().length == 0) {
+  $("#id_expires").val("{{ expire_date }}");
+ }
+});
+
+</script>
+
+{% endblock %}

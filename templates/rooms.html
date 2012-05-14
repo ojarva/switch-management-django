@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block menu %}
+<li><a href="{% url switch.views.rooms office.office_name %}">rooms</a></li>
+<li><a href="{% url switch.views.switches office.office_name %}">switches</a></li>
+<li><a href="{% url switch.views.physical_ports office.office_name %}">physical ports</a></li>
+{% endblock %}
+
+{% block content %}
+
+<table id="datatable" class="display">
+<thead>
+<tr>
+<th>Room</th>
+</tr>
+</thead>
+<tbody>
+{% for item in rooms %}
+<tr>
+<td><a href="{% url switch.views.room item.id %}">{{ item.name }}</a></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+<script type="text/javascript">
+$(document).ready(function() {
+ $("#datatable").dataTable({ "bPaginate": false});
+});
+</script>
+
+
+{% endblock %}
