@@ -7,14 +7,22 @@ Earlier we physically moved cables between switches, but that was slow and error
 Installation
 ------------
 
-* Django
-* South
+* Install dependencies: Django, debug_toolbar, South
+
+```
+pip install django
+pip install django-debug-toolbar
+pip install south
+```
+
+* Create database tables:
 
 ```
 python manage.py syncdb
 ```
 
-* This uses static files from cdn.futurice.com
+* Example script for fastcgi mode: *bin/start.sh* 
+* Currently static files are served from cdn.futurice.com
 
 License
 -------
